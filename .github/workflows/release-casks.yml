@@ -1,0 +1,21 @@
+name: Release Casks (Livecheck)
+
+on:
+  release:
+    types: [ released ]
+
+  workflow_dispatch:
+  schedule:
+    - cron: '0 5 1 * *' # You cann adjust the schedule as needed, this example runs on the first day of every month at 5:00 AM
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update casks using Livecheck
+        uses: FriesI23/action-homebrew-bump-cask@v2.0
+        with:
+          # Remember to create a COMMITTER_TOKEN secret with 'public_repo' and 'workflow' scopes
+          token: ${{ secrets.COMMITTER_TOKEN }}
+          tap: DetachHead/homebrew-tap
+          livecheck: true
