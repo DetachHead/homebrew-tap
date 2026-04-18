@@ -1,6 +1,6 @@
 cask "rebased" do
-  version "1.0.8"
-  sha256 "19f4ddc9807737b56510177a8e1e20a98bba796e67caf086fa3c90c29b3129b8"
+  version "1.0.9"
+  sha256 "ac020175f166a17d2627658520e613c708708062c1e512f8a206f8e14707000e"
 
   url "https://github.com/DetachHead/rebased/releases/download/#{version}/rebased-aarch64.dmg"
   name "Rebased"
