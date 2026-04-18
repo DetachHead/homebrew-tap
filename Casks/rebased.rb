@@ -2,7 +2,8 @@ cask "rebased" do
   version "1.0.8"
   sha256 "19f4ddc9807737b56510177a8e1e20a98bba796e67caf086fa3c90c29b3129b8"
 
-  url "https://github.com/DetachHead/rebased/releases/download/#{version}/rebased.dmg"
+  # TODO: update this to rebased.dmg on the next release
+  url "https://github.com/DetachHead/rebased/releases/download/#{version}/ideaIC-261.22158.SNAPSHOT-aarch64.dmg"
   name "Rebased"
   desc "Git client based on the IntelliJ platform"
   homepage "https://github.com/DetachHead/rebased"
