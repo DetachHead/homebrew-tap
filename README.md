@@ -1,18 +1,13 @@
-# Detachhead Tap
+# DetachHead's Tap
 
-## How do I install these formulae?
+Homebrew tap for [Rebased](https://github.com/detachhead/rebased).
 
-`brew install detachhead/tap/<formula>`
+## Installation
 
-Or `brew tap detachhead/tap` and then `brew install <formula>`.
+`brew install detachhead/tap/rebased`
 
-Or, in a `brew bundle` `Brewfile`:
+Or `brew tap detachhead/tap` and then `brew install rebased`.
 
-```ruby
-tap "detachhead/tap"
-brew "<formula>"
-```
+## Credit
 
-## Documentation
-
-`brew help`, `man brew` or check [Homebrew's documentation](https://docs.brew.sh).
+Originally taken from https://github.com/fraluc06/homebrew-tap
