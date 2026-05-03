@@ -1,8 +1,11 @@
 cask "rebased" do
-  version "1.0.12"
-  sha256 "3ef9aace106128e78e94777c7fe64228cfa1df816e7cc15b8b1bc054b7df9e9c"
+  arch arm: "-aarch64", intel: ""
 
-  url "https://github.com/DetachHead/rebased/releases/download/#{version}/rebased-aarch64.dmg"
+  version "1.0.12"
+  sha256 arm:   "3ef9aace106128e78e94777c7fe64228cfa1df816e7cc15b8b1bc054b7df9e9c",
+         intel: "93bc02e6c7ba06e907cfa540ed22d9eae0a7e3408810bf3bf07cd18a8bef6cdc"
+
+  url "https://github.com/DetachHead/rebased/releases/download/#{version}/rebased#{arch}.dmg"
   name "Rebased"
   desc "Git client based on the IntelliJ platform"
   homepage "https://github.com/DetachHead/rebased"
@@ -11,8 +14,6 @@ cask "rebased" do
     url :url
     strategy :github_latest
   end
-
-  depends_on arch: :arm64
 
   app "Rebased.app"
 
