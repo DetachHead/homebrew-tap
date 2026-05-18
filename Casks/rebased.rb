@@ -19,6 +19,8 @@ cask "rebased" do
     strategy :github_latest
   end
 
+  depends_on :macos
+
   app "Rebased.app"
 
   postflight do
