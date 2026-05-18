@@ -6,30 +6,37 @@ on:
       - main
   pull_request:
 
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
 jobs:
   test-bot:
+    name: Run tests
     strategy:
       matrix:
         os: [ macos-15-intel, macos-26 ]
         include:
           - os: ubuntu-latest
-            container: ghcr.io/homebrew/brew:main
+            container: ghcr.io/homebrew/brew@sha256:825f62f804d397df346ef7a1230194c65ae5a98057970d0542f3733885f188b3 # 5.1.11
     runs-on: ${{ matrix.os }}
     container: ${{ matrix.container }}
     permissions:
-      actions: read
-      checks: read
-      contents: read
-      pull-requests: write
+      actions: read # to read artifacts
+      checks: read # to read check results
+      contents: read # to checkout code
+      pull-requests: write # to add labels
     steps:
       - name: Set up Homebrew
         id: set-up-homebrew
-        uses: Homebrew/actions/setup-homebrew@main
+        uses: Homebrew/actions/setup-homebrew@8eb7f2efa6ab636da09aef605b497fd5b8a7587d # main
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Cache Homebrew Bundler RubyGems
-        uses: actions/cache@v4
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
         with:
           path: ${{ steps.set-up-homebrew.outputs.gems-path }}
           key: ${{ matrix.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
@@ -45,7 +52,7 @@ jobs:
 
       - name: Upload bottles as artifact
         if: always() && github.event_name == 'pull_request'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: bottles_${{ matrix.os }}
           path: '*.bottle.*'
@@ -56,10 +63,12 @@ jobs:
     needs: test-bot
     if: github.event_name == 'pull_request' && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
     permissions:
-      pull-requests: write
+      pull-requests: write # to add labels
     steps:
       - name: Add pr-pull label
         run: |
-          gh pr edit "${{ github.event.pull_request.number }}" --add-label "pr-pull" --repo "${{ github.repository }}"
+          gh pr edit "$PR_NUMBER" --add-label "pr-pull" --repo "$REPOSITORY"
         env:
           GH_TOKEN: ${{ secrets.COMMITTER_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPOSITORY: ${{ github.repository }}

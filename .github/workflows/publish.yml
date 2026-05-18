@@ -5,24 +5,31 @@ on:
     types:
       - labeled
 
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 jobs:
   pr-pull:
+    name: Pull bottles
     if: contains(github.event.pull_request.labels.*.name, 'pr-pull')
     runs-on: ubuntu-latest
     permissions:
-      actions: read
-      checks: read
-      contents: write
-      issues: read
-      pull-requests: write
+      actions: read # to read artifacts
+      checks: read # to read check results
+      contents: write # to push commits
+      issues: read # to read issue labels
+      pull-requests: write # to manage PR
     steps:
       - name: Set up Homebrew
-        uses: Homebrew/actions/setup-homebrew@main
+        uses: Homebrew/actions/setup-homebrew@8eb7f2efa6ab636da09aef605b497fd5b8a7587d # main
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up git
-        uses: Homebrew/actions/git-user-config@main
+        uses: Homebrew/actions/git-user-config@8eb7f2efa6ab636da09aef605b497fd5b8a7587d # main
 
       - name: Pull bottles
         env:
@@ -31,7 +38,7 @@ jobs:
         run: brew pr-pull --debug --tap="$GITHUB_REPOSITORY" "$PULL_REQUEST"
 
       - name: Push commits
-        uses: Homebrew/actions/git-try-push@main
+        uses: Homebrew/actions/git-try-push@8eb7f2efa6ab636da09aef605b497fd5b8a7587d # main
         with:
           branch: main
 
