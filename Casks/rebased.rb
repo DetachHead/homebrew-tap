@@ -1,11 +1,15 @@
 cask "rebased" do
-  arch arm: "-aarch64", intel: ""
-
   version "1.0.14"
-  sha256 arm:   "1a164f6c11c84f0794d74daba5dfcff8a875284a0d6e99d6147e247e85739ffa",
-         intel: "93c171762bdde51db7f83aacf82c9801a08911df5144e50bd7a9e8792defa93a"
 
-  url "https://github.com/DetachHead/rebased/releases/download/#{version}/rebased#{arch}.dmg"
+  on_macos do
+    arch arm: "-aarch64", intel: ""
+
+    sha256 arm:   "1a164f6c11c84f0794d74daba5dfcff8a875284a0d6e99d6147e247e85739ffa",
+           intel: "93c171762bdde51db7f83aacf82c9801a08911df5144e50bd7a9e8792defa93a"
+
+    url "https://github.com/DetachHead/rebased/releases/download/#{version}/rebased#{arch}.dmg"
+  end
+
   name "Rebased"
   desc "Git client based on the IntelliJ platform"
   homepage "https://github.com/DetachHead/rebased"
@@ -14,8 +18,6 @@ cask "rebased" do
     url :url
     strategy :github_latest
   end
-
-  depends_on :macos
 
   app "Rebased.app"
 
