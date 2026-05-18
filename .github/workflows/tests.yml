@@ -20,7 +20,7 @@ jobs:
         os: [ macos-15-intel, macos-26 ]
         include:
           - os: ubuntu-latest
-            container: ghcr.io/homebrew/brew@sha256:12f7265dc6ca43aacf3b659825b04a3d160bf682daf0e1337ad1dc6e59b26212 # main
+            container: ghcr.io/homebrew/brew@sha256:825f62f804d397df346ef7a1230194c65ae5a98057970d0542f3733885f188b3 # 5.1.11
     runs-on: ${{ matrix.os }}
     container: ${{ matrix.container }}
     permissions:

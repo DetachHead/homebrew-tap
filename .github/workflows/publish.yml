@@ -20,7 +20,7 @@ jobs:
       actions: read # to read artifacts
       checks: read # to read check results
       contents: write # to push commits
-      issues: read # to read PR labels
+      issues: read # to read issue labels
       pull-requests: write # to manage PR
     steps:
       - name: Set up Homebrew
