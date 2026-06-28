@@ -1,0 +1,3 @@
+[submodule "brew"]
+	path = brew
+	url = https://github.com/Homebrew/brew
