@@ -18,29 +18,22 @@ jobs:
     strategy:
       matrix:
         os: [ macos-15-intel, macos-26 ]
-        include:
-          - os: ubuntu-latest
-            container: ghcr.io/homebrew/brew@sha256:825f62f804d397df346ef7a1230194c65ae5a98057970d0542f3733885f188b3 # 5.1.11
     runs-on: ${{ matrix.os }}
-    container: ${{ matrix.container }}
     permissions:
       actions: read # to read artifacts
       checks: read # to read check results
       contents: read # to checkout code
       pull-requests: write # to add labels
     steps:
-      - name: Set up Homebrew
-        id: set-up-homebrew
-        uses: Homebrew/actions/setup-homebrew@8eb7f2efa6ab636da09aef605b497fd5b8a7587d # main
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          persist-credentials: false
+          # homebrew is designed to be difficult to pin for some reason, so we have pin it by cloning the repo at a specific revision,
+          # which we do using a git submodule. https://github.com/Homebrew/actions/issues/874
+          submodules: true
 
-      - name: Cache Homebrew Bundler RubyGems
-        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
-        with:
-          path: ${{ steps.set-up-homebrew.outputs.gems-path }}
-          key: ${{ matrix.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
-          restore-keys: ${{ matrix.os }}-rubygems-
+      - name: add brew to PATH
+        run: echo "$PWD/brew/bin" >> $GITHUB_PATH
 
       - run: brew test-bot --only-cleanup-before
 
