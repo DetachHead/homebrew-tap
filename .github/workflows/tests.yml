@@ -37,7 +37,7 @@ jobs:
 
       - name: add tap
         env:
-            tap: $GITHUB_REPOSITORY_OWNER/tap
+            tap: ${{ github.repository_owner }}/tap
         # . is needed to checkout the version from the current branch instead of main
         run: |
           brew tap $tap .
