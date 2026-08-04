@@ -1,11 +1,11 @@
 cask "rebased" do
-  version "1.1.9"
+  version "1.1.10"
 
   on_macos do
     arch arm: "-aarch64", intel: ""
 
-    sha256 arm:   "8962494cc452b464fb3da25e08142ee13f7d8f7164c98ec8ceedc3f56fd8995d",
-           intel: "c71b900d3dd3afc290c0ce4660204618f11c86ad1b736095b157126fe1eb6e56"
+    sha256 arm:   "2557559b7bbe48935e5b80ad904c57d6dcb4f07ea4452709b333f42eda637490",
+           intel: "414c2288cf177ab3cf7b33e9d73b99d507033b997bcefe457ffd080e0eeed3cc"
 
     url "https://github.com/DetachHead/rebased/releases/download/#{version}/rebased#{arch}.dmg"
   end
