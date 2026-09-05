@@ -23,9 +23,9 @@ cask "rebased" do
 
   app "Rebased.app"
 
-  postflight do
-    system_command "xattr",
-                   args: ["-rd", "com.apple.quarantine", "#{appdir}/Rebased.app"]
+  postflight_steps do
+    run "xattr",
+        args: ["-rd", "com.apple.quarantine", "{{appdir}}/Rebased.app"]
   end
 
   uninstall quit: "io.github.detachhead.rebased"
