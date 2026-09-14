@@ -1,11 +1,11 @@
 cask "rebased" do
-  version "1.1.15"
+  version "1.1.16"
 
   on_macos do
-    arch arm: "-aarch64", intel: ""
+    arch arm: "-aarch64"
 
-    sha256 arm:   "b8efb6791c860fe84f0149f55b1e4dbd5fc4f7a19968c63f8e2d1116221f9de7",
-           intel: "96970cc49d75f5103edf15217ac999b2220667ddabf20f574dd3d74a3998cbe8"
+    sha256 arm:   "57ad71914785ffcc3b5c318917df765d7b05e5681e097c0f52df3c0d1b3338fd",
+           intel: "e3dc5d8214ad76126733bc4e0bc50d5d735dce04f8a790603f955e528aa623aa"
 
     url "https://github.com/DetachHead/rebased/releases/download/#{version}/rebased#{arch}.dmg"
   end
@@ -25,7 +25,7 @@ cask "rebased" do
 
   postflight_steps do
     run "xattr",
-                   args: ["-rd", "com.apple.quarantine", "{{appdir}}/Rebased.app"]
+        args: ["-rd", "com.apple.quarantine", "{{appdir}}/Rebased.app"]
   end
 
   uninstall quit: "io.github.detachhead.rebased"
